@@ -1,0 +1,14 @@
+@import '../../vars.css';
+
+
+.container {
+    background-color: var(--color-grid);
+    padding: 20px;
+    height: 20%;
+    position: relative;
+    border-radius: 20px;
+}
+
+.title {
+    color: var(--color-txt);
+}

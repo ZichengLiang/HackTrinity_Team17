@@ -1,0 +1,15 @@
+/* Grid2.module.css */
+@import '../../vars.css'; 
+
+.container {
+    background-color: var(--color-grid);
+    padding: 20px;
+    position: relative;
+    border-radius: 20px;
+    margin-top: 15px;
+    height: 150px;
+}
+
+.title {
+    color: var(--color-txt);
+}
