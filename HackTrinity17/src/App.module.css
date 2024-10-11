@@ -10,10 +10,38 @@
   padding-left: 15px;
   padding-right: 15px; 
 }
+/* App.module.css */
 
-.gridContainer {
+.dashboard {
+  display: flex;
+  gap: 15px;
+}
+
+.leftCol {
+  flex: 3;
   display: grid;
-  grid-template-columns: 40% 60%; 
+  gap: 15px;
+}
+
+.rightCol {
+  flex: 6;
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* First column takes 1 fraction, second takes 2 fractions */
+}
+
+.notif {
+  display: grid;
+  grid-column: span 2;
+  
+}
+
+.metrics {
+  display: grid;
+  grid-column: span 1;
   gap: 15px;
   margin-right: 15px;
+}
+
+.botContainer {
+  grid-column: span 1; 
 }
