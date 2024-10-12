@@ -1,0 +1,14 @@
+annotated-types
+anyio
+asyncpg
+click
+fastapi
+h11
+idna
+pydantic
+pydantic_core
+sniffio
+starlette
+typing_extensions
+uvicorn
+supabase-py
