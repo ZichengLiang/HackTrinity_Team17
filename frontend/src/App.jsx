@@ -16,7 +16,7 @@ function App() {
         <Grid2/>
       </div>
       <div className="ImageUploader"> 
-            <h1 className="Title">Image Upload Example</h1>
+            <h1 className="Title">Image Upload Example</h1> {/*Added for testing*/}
             <ImageUpload onImageUpload/>
         </div>
     </div>

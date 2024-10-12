@@ -2,33 +2,33 @@ import React, { useState } from 'react';
 
 const ImageUpload = () => {
     const [selectedImage, setSelectedImage] = useState(null);
-    const [urls, setUrls] = useState([]); // State to hold the URLs from the response
+    const [urls, setUrls] = useState([]); 
 
     const handleImageChange = (event) => {
-        const file = event.target.files[0]; // Get the first file
+        const file = event.target.files[0]; //Only working for one file at the moment, will set up google drive soon
         if (file) {
-            setSelectedImage(file); // Store the image file in state
+            setSelectedImage(file); 
             uploadImage(file); // Upload the image to the backend
         }
     };
 
     const uploadImage = async (file) => {
         const formData = new FormData();
-        formData.append('file', file); // Append the file to the form data
+        formData.append('file', file)
 
         try {
             const response = await fetch('http://localhost:8000/upload', {
                 method: 'POST',
-                body: formData, // Send form data
+                body: formData, // Send form data to backend
             });
 
-            // Handle the response
+            // Handle the response from backend
             const data = await response.json();
             if (response.ok) {
-                // If the response is successful, set the URLs in state
+                
                 setUrls(data.exact_matches);
             } else {
-                console.error(data.message); // Log any error messages
+                console.error(data.message); 
             }
         } catch (error) {
             console.error('Error uploading image:', error);
@@ -52,7 +52,7 @@ const ImageUpload = () => {
                     />
                 </div>
             )}
-            {urls.length > 0 && (
+            {urls.length > 0 && ( //Only renders list of urls when there are any to render (will change here for sending to db)
                 <div>
                     <h3>Exact Matches:</h3>
                     <ul>
