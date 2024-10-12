@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "stocksafe-438120",
+  "private_key_id": "8fac68f42b37d980563f051e7a051d3e66317498",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDGzNHPGf+GJhQO\nqRweW+yosz2Gl1SGvXtJEk8S+Si/viqKq1XpbLNgEjEkQ8pfemS8LzCWlacnA2Qd\nnTlzWbPlAs7tWdiQapln+aRWwg8ATGHiDkX6GdYzIKwCZozogGXbXc2xvQMQSSV2\nsbYoVTE6e1LEWPRvMO5hqeAWSlL4lpCLIZCuBBjYBK6/4DJx+3jagiHEauJY09Y0\nQAeYV86LKLWJFaJJN6/bK6Q0UVC6ceL/3CxDCj55iaLjDaRnrlesTVJlcWmH302v\nyQerqPQ3NnXWXnV14SNM0Uc+rYAQiYJZxjPoCVfpSuf9Q0UuBwHF/ExvflkDUPNg\n6Iqx12b1AgMBAAECggEADZEfxmLvUb/agY+f6CB825xz1/IO5i0bM0bpF5Hiaod3\nTsRXlhkBes5zBRcNQgvPwRn1Vml7IUn1dKHssEcQZFIXPhJyGZT0yCg8w2D19h7A\nVVWFCAboW8/gfT9zYVCV4u0ZYwZTpbJgOKPzGviJZgTRhq3NbKMpuYeGz+6dj/JT\nheD8o2jf6h1xU53f+aqKC/2a6xKmpdyXS/cTijgvjxx38qzzb+IRUbE39ns4mYgz\nhLO66SjbM7vgjYOOUsHZ+YP+cp2ck8f9+7YFy6ixkuLXA544lbfw8Oe8+WmvgUAC\ndM0fyqKxcggLDO9nynxuihJJp8lTrpXHpejfGQYoJwKBgQD9czV8k6667EY54Fgt\nEqfj8QA9j8ZOZOS1PmaMWHi1x2Bcb8+8J072AFiFHvEjkmN4iP0WxNavjAX7bhzY\neaS+I+DilEhr5QEc3Li2zi3KeoV+3+lyo1U9NDwTtVkG2EnA4nakTwNceuKNRgT3\nK+MizlwPefNzLaBVI2zZqX2zEwKBgQDIzNpkCugqYMbRFM8bLY5/KOP5oZ8SBTTd\ncbFUBil2Y+f/Zb/s5WhT+9IVDicwziVO93j2tHLJTluKwgGbAF9bzwAsAvRR9HUr\n1URfw/QJrckYtRO45vNZPYx6tD/1Scq4LPQAmcSyYcIvjx8gFJ2PFyyhseqEThf6\nU4wtBIA21wKBgGNrihOwKt6QSIvzgSNNKia0Jw//Eh82XLDsJXXwTomgCCC6i5aX\nJNZDFHZDyPvXNMXXltATrtN17fLPIumX7hPYJyM6X55TWrhjrOGoxzWiEjPOydh6\nUbmMf/SLMr0IowXS0A9sHzlryur4CIKc6KCCqoI3qFQKFdbP6qcHYZOZAoGBAK2H\nOwRR2Kkm0SpGzWQzTn3dnIZSgeFU1oa4hgKTAKnrVMaF7AKRjkNlz/uaK4wl2mAP\nxV2OO9Rz/vA/EJwfCkmQ7hkaxIE+vTOQLnKEKRVkNfFAKzcTfyGT6x7vPoZ/qszX\nLFaIjE+L5ACtsrxKlI7f/BYQZxbHVjlikjUlOpgpAoGATpPhlpr51ydLD5VvB0vk\nlXVlJ1RvlKgfDNo8/7L6E48iY7BUOON6kxttKE4MSjgh38BhSu/MiYPSMj97Ke5D\n1wKjiWmOZTwZTZw3mvtY4ZD9aW8AT+PMGZe4u6ttrFbYTQJJ2Qgjhvh5fn9/7/Ap\nsW6SDtjv+QKGj0pKyw+qgWk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "stocksafe-198@stocksafe-438120.iam.gserviceaccount.com",
+  "client_id": "114058296901386289934",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/stocksafe-198%40stocksafe-438120.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
