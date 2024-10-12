@@ -8,7 +8,7 @@ import ImageUpload from './components/ImageUpload/ImageUpload';
 import ImageGallery from './components/ImageGallery/ImageGallery';
 import TopSites from './components/TopSites/TopSites';
 import NextActions from './components/NextActions/NextActions';
-import Chatbot from './components/ChatBot/Chatbot';
+import Chatbot from './components/Chatbot/Chatbot'; 
 
 function App() {
 
@@ -38,7 +38,7 @@ function App() {
           </div>
 
           <div className={styles.botContainer}>
-            <Chatbot />
+            <Chatbot/>
           </div>
 
         </div>
