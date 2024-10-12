@@ -11,7 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
-
+stocksafe.json
+*.pyc
+__pycache__
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

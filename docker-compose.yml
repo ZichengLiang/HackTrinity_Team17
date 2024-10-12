@@ -1,0 +1,22 @@
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"  # Map host port to container port
+    volumes:
+      - ./backend:/app  # Mount the backend directory to enable live changes
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"  # Map host port to container port
+    volumes:
+      - ./frontend:/app  # Mount the frontend directory to enable live changes
