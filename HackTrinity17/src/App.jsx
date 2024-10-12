@@ -27,9 +27,9 @@ function App() {
 
         <div className={styles.rightCol}>
           <div className={styles.notif}>
-            <Notification/>
+            <Notification />
           </div>
-          
+            
           <div className={styles.metrics}>
             <TopSites/>
             <NextActions/>
