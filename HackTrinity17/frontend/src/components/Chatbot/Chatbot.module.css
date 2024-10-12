@@ -2,11 +2,18 @@
 
 .container {
     background-color: var(--color-grid);
-     padding: 20px;
+    padding: 20px;
     position: relative;
     border-radius: 20px;
+    height: 500px;
 }
 
 .title {
     color: var(--color-txt);
+}
+
+.msgContainer {
+    background-color: var(--color-btn1);
+    width: 80%;
+    height: 90%;
 }

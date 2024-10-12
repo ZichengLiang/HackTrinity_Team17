@@ -11,7 +11,8 @@
 }
 
 .title {
-    color: var(--color-txt);
+    color: var(--color-orange);
+    margin-left: 10px;
 }
 
 .notif {

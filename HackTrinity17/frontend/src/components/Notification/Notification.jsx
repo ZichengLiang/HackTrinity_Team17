@@ -8,7 +8,7 @@ const Notification = () => {
         <span>
           <MdNotificationsActive className={styles.icon} />
         </span>
-        <h1 className={styles.title}>Notification</h1>
+        <h1 className={styles.title}>5 new matches found</h1>
       </div>
         
     </div>

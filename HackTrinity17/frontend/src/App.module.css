@@ -20,6 +20,7 @@
 .leftCol {
   flex: 3;
   display: grid;
+  grid-template-rows: auto auto;
   gap: 15px;
 }
 
@@ -36,7 +37,7 @@
 .notif {
   display: grid;
   grid-column: span 2;
-  max-height: 0px; /* THIS MIGHT BREAK  */
+  margin-bottom: 20px;
 }
 
 .metrics {
