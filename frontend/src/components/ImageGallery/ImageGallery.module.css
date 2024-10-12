@@ -1,17 +1,13 @@
-/* Grid1.module.css */
-
-
-@import '../../vars.css'; 
+@import "../../vars.css"; 
 
 .container {
     background-color: var(--color-grid);
     padding: 20px;
     position: relative;
     border-radius: 20px;
-    margin-top: 15px;
-    height: 200px;
+    height: 300px;
+    margin-bottom: 15px;
 }
-
 
 .title {
     color: var(--color-txt);

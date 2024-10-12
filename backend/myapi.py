@@ -2,16 +2,23 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
 from google.cloud import vision
 from google.oauth2 import service_account
-from pydantic import BaseModel
 from dotenv import load_dotenv
 from supabase import create_client, Client
 from typing import List
 import os
+import magic
+import hashlib
 
+# Load environment variables
 load_dotenv()
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+SERVICE_ACCOUNT_JSON = "./stocksafe.json"
+
+# Create a client using the service account credentials
+credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_JSON)
+client = vision.ImageAnnotatorClient(credentials=credentials)
 
 # Initialize Supabase client
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
@@ -27,64 +34,72 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-SERVICE_ACCOUNT_JSON = "./stocksafe.json"
-
-# Create a Google Vision client
-credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_JSON)
-client = vision.ImageAnnotatorClient(credentials=credentials)
-
-# Hardcoded user for testing
-HARD_CODED_USER_ID = 'dd4e78a1-7d98-409a-bec6-0dd6ee5b926b'
+def generate_image_hash(image_content: bytes) -> str:
+    """Generate a SHA-256 hash for the given image content."""
+    sha256 = hashlib.sha256()
+    sha256.update(image_content)
+    return sha256.hexdigest()
 
 @app.post("/upload")
-async def upload_and_detect_image(file: UploadFile = File(...)):
-    # 1. Save the image to Supabase (using hardcoded user)
-    file_name = f"{HARD_CODED_USER_ID}/{file.filename}"
-    print(f"Uploading file: {file_name}")
-    file_content = await file.read()
+async def upload_and_detect_image(files: List[UploadFile] = File(...)):
+    results = []  # Store results for all processed files
+    print("works")
+    for file in files:
+        file_name = file.filename
+        print(f"Uploading file: {file_name}")
+        file_content = await file.read()
+        image_hash = generate_image_hash(file_content)
 
-    # Upload to Supabase storage
-    res = supabase.storage.from_('image-bucket').upload(file_name, file_content)
-    if res.get('error'):
-        return JSONResponse(status_code=400, content={"error": "Failed to upload to storage", "details": res['error']})
+        # Detect MIME type
+        file_mime_type = magic.from_buffer(file_content, mime=True)
 
-    # Generate file URL
-    file_url = f"{SUPABASE_URL}/storage/v1/object/public/image-bucket/{file_name}"
+        # Upload the file to Supabase
+        res = supabase.storage.from_("image-bucket").upload(file_name, file_content, {"mimetype": file_mime_type})
 
-    # 2. Run Google Vision API Web Detection on the image
-    image = vision.Image(content=file_content)  # Use the same file content
-    response = client.web_detection(image=image)
+        # Check if the upload was successful
+        if res.status_code != 200:
+            error_message = getattr(res, 'message', 'Unknown error occurred')
+            print(f"Storage upload error for {file_name}: {error_message}")
+            return JSONResponse(content={"error": "Failed to upload to storage", "details": error_message})
 
-    exact_matches = []
-    if response.web_detection and response.web_detection.full_matching_images:
-        for match in response.web_detection.full_matching_images:
-            url = match.url
-            exact_matches.append(url)
+        # Generate file URL
+        file_url = supabase.storage.from_('image-bucket').get_public_url(file_name)
 
-    # Store the image in the `images` table
-    image_data = {
-        "user_id": HARD_CODED_USER_ID,  # Using hardcoded user
-        "image_url": file_url,
-        "hash": "image_hash_placeholder"  # Add your image hashing logic here
-    }
-    image_response = supabase.table('images').insert(image_data).execute()
+        # Run Google Vision API Web Detection on the image
+        image = vision.Image(content=file_content)
+        response = client.web_detection(image=image)
 
-    if image_response.get('status_code') != 201:
-        return JSONResponse(status_code=400, content={"error": "Failed to insert image into database", "details": image_response.get('data')})
+        exact_matches = []
+        if response.web_detection and response.web_detection.full_matching_images:
+            for match in response.web_detection.full_matching_images:
+                url = match.url
+                exact_matches.append(url)
 
-    # If exact matches are found, store them in the `stolen_images` table
-    if exact_matches:
-        stolen_image_data = {
-            "user_id": HARD_CODED_USER_ID,  # Using hardcoded user
-            "original_image_url": file_url,
-            "stolen_image_urls": exact_matches
+        # Store the image in the `images` table
+        image_data = {
+            "user_id": 'dd4e78a1-7d98-409a-bec6-0dd6ee5b926b',  # Use a hardcoded user for testing
+            "image_name": file.filename,
+            "image_url": file_url,
+            "hash": image_hash
         }
-        stolen_response = supabase.table('stolen_images').insert(stolen_image_data).execute()
+        
+        image_response = supabase.table('images').insert(image_data).execute()
 
-        if stolen_response.get('status_code') != 201:
-            return JSONResponse(status_code=400, content={"error": "Failed to store stolen image URLs", "details": stolen_response.get('data')})
+        if image_response.data:
+            image_id = image_response.data[0]['id']
+            # If exact matches are found, store them in the `stolen_images` table
+            if exact_matches:
+                stolen_image_data = {
+                    "image_id": image_id,
+                    "image_name": file.filename,
+                    "image_hash": image_hash,
+                    "stolen_url": exact_matches  # Ensure this is an array if your database supports it
+                }
+                stolen_response = supabase.table('stolen_images').insert(stolen_image_data).execute()
+                results.append({"file_name": file_name, "message": "Image uploaded, stolen images found", "stolen_urls": exact_matches})
+            else:
+                results.append({"file_name": file_name, "message": "Image uploaded, no stolen images found", "file_url": file_url})
+        else:
+            results.append({"file_name": file_name, "message": "Failed to store image data."})
 
-        return JSONResponse(status_code=200, content={"message": "Image uploaded and stolen image URLs stored", "file_url": file_url, "stolen_image_urls": exact_matches})
-    else:
-        return JSONResponse(status_code=200, content={"message": "Image uploaded, no stolen images found", "file_url": file_url})
-
+    return JSONResponse(content={"results": results})  # Return results for all processed files

@@ -2,23 +2,48 @@ import { useState } from 'react';
 
 import styles from './App.module.css';
 import Header from './components/Header/Header';
-import Grid1 from './components/Grid1/Grid1';
-import Grid2 from './components/Grid2/Grid2';
-import ImageUpload from './components/ImageUpload'; 
+import Matches from './components/Matches/Matches';
+import Notification from './components/Notification/Notification';
+import ImageUpload from './components/ImageUpload/ImageUpload';
+import ImageGallery from './components/ImageGallery/ImageGallery';
+import TopSites from './components/TopSites/TopSites';
+import NextActions from './components/NextActions/NextActions';
+import Chatbot from './components/Chatbot/Chatbot'; 
 
 function App() {
 
   return (
     <div className={styles.App}>
-      <Header/>
-      <div className={styles.gridContainer}>
-        <Grid1/>
-        <Grid2/>
-      </div>
-      <div className="ImageUploader"> 
-            <h1 className="Title">Image Upload Example</h1> {/*Added for testing*/}
-            <ImageUpload onImageUpload/>
+      <Header className={styles.header} />
+
+      <div className={styles.dashboard}>
+
+        <div className={styles.leftCol}>
+        <Matches/>
+        <ImageUpload/>
+        <ImageGallery/>
         </div>
+
+
+        <div className={styles.rightCol}>
+          <div className={styles.notif}>
+            <Notification/>
+
+          </div>
+          
+          
+          <div className={styles.metrics}>
+            <TopSites/>
+            <NextActions/>
+          </div>
+
+          <div className={styles.botContainer}>
+            <Chatbot/>
+          </div>
+
+        </div>
+    
+      </div>
     </div>
   )
 }

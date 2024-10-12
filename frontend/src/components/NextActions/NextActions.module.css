@@ -1,13 +1,10 @@
-@import '../../vars.css';
-
+@import "../../vars.css"; 
 
 .container {
     background-color: var(--color-grid);
-    padding: 20px;
-    height: 20%;
-    position: relative;
+     padding: 20px;
     border-radius: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .title {
