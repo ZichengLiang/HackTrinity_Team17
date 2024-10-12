@@ -12,3 +12,10 @@
 .title {
     color: var(--color-txt);
 }
+
+.image {
+    width: 200px; /*tmp just for smaller images to not break screen*/
+    height: 150px; 
+    object-fit: cover; 
+    margin: 10px; 
+}

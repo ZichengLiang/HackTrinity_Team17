@@ -1,79 +1,80 @@
-import React, { useState } from 'react';
+import styles from './ImageUpload.module.css';
+import { useState } from 'react';
+import { FiUploadCloud } from "react-icons/fi";
 
-const ImageUpload = () => {
-    const [selectedFiles, setSelectedFiles] = useState(null);
-    const [urls, setUrls] = useState([]); // State to hold URLs from the response
+const ImageUpload = ({ setUrls }) => {
+  const [selectedFiles, setSelectedFiles] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
-    const handleFileChange = (event) => {
-        const files = event.target.files; // Get selected files
-        setSelectedFiles(files); // Store files in state
-    };
+  const handleFileChange = (event) => {
+    const files = event.target.files;
+    setSelectedFiles(files);
+    setUploadProgress(0);
+  };
 
-    const uploadImages = async () => {
-        const formData = new FormData();
+  const uploadImages = async (event) => {
+    event.preventDefault();
+    const formData = new FormData();
 
-        // Append files to form data
-        if (selectedFiles) {
-            for (let i = 0; i < selectedFiles.length; i++) {
-                formData.append('files', selectedFiles[i]); // Match key with backend expectation
-            }
-        }
+    if (selectedFiles) {
+      for (let i = 0; i < selectedFiles.length; i++) {
+        formData.append('files', selectedFiles[i]);
+      }
+    }
 
-        try {
-            const response = await fetch('http://localhost:8000/upload', {
-                method: 'POST',
-                body: formData,
-            });
+    try {
+      const response = await fetch('http://localhost:8000/upload', {
+        method: 'POST',
+        body: formData,
+      });
 
-            const data = await response.json();
+      const data = await response.json();
 
-            if (response.ok) {
-                // Update state with exact matches from the response
-                const exactMatches = data.results.flatMap(result => result.stolen_urls || []);
-                setUrls(exactMatches);
-            } else {
-                console.error(data.message); // Log error messages
-            }
-        } catch (error) {
-            console.error('Error uploading images:', error);
-        }
-    };
+      if (response.ok) {
+        const exactMatches = data.results.flatMap(result => result.stolen_urls || []);
+        setUrls(exactMatches);
+      } else {
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.error('Error uploading images:', error);
+    }
+  };
 
-    return (
-        <div>
-            <input type="file" multiple accept="image/*" onChange={handleFileChange} />
-            {selectedFiles && (
-                <div>
-                    <button onClick={uploadImages}>Upload</button>
-                    <h3>Preview:</h3>
-                    {Array.from(selectedFiles).map((file, index) => (
-                        <div key={index}>
-                            <img
-                                src={URL.createObjectURL(file)}
-                                alt="Selected"
-                                style={{ width: '200px', height: 'auto' }}
-                            />
-                            <p>{file.name}</p>
-                        </div>
-                    ))}
-                </div>
-            )}
-            {urls.length > 0 && (
-                <div>
-                    <h3>Exact Matches:</h3>
-                    <ul>
-                        {urls.map((url, index) => (
-                            <li key={index}>
-                                <a href={url} target="_blank" rel="noopener noreferrer">
-                                    {url}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
+  return (
+    <div className={styles.container}>
+      <form onSubmit={uploadImages}>
+        <div className={styles.uploadContainer}>
+          <button type="submit" className={styles.submitBtn}>
+            <FiUploadCloud className={styles.icon} />
+          </button>
+          <div className={styles.rightCol}>
+            <h1 className={styles.title}>Upload Images</h1>
+            <input
+              type="file"
+              id="fileUpload"
+              onChange={handleFileChange}
+              multiple
+              className={styles.fileInput}
+              style={{ display: 'none' }}
+            />
+            <label htmlFor="fileUpload" className={styles.customButton}>
+              <span className={styles.iconText}>
+                <i className={styles.icon}></i> Choose Files
+              </span>
+            </label>
+          </div>
         </div>
-    );
+      </form>
+
+      {uploadProgress > 0 && (
+        <div className={styles.progressContainer}>
+          <div className={styles.progressBar} style={{ width: `${uploadProgress}%` }}></div>
+          <span className={styles.progressText}>{uploadProgress}%</span>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default ImageUpload;

@@ -1,10 +1,12 @@
 from fastapi import FastAPI, File, UploadFile
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 from google.cloud import vision
 from google.oauth2 import service_account
 from dotenv import load_dotenv
 from supabase import create_client, Client
+from supabase.client import ClientOptions
 from typing import List
+from io import BytesIO
 import os
 import magic
 import hashlib
@@ -103,3 +105,59 @@ async def upload_and_detect_image(files: List[UploadFile] = File(...)):
             results.append({"file_name": file_name, "message": "Failed to store image data."})
 
     return JSONResponse(content={"results": results})  # Return results for all processed files
+
+# Function to get the latest three image names
+@app.get("/download_latest_images")
+async def get_latest_three_image_names():
+    response = (
+        supabase.table("images")
+        .select("image_name, image_url")  # Ensure to select both fields
+        .order("uploaded_at", desc=True)
+        .limit(3)
+        .execute()
+    )
+    
+    # Extract the image names and URLs from the response
+    images = [{"name": item["image_name"], "url": item["image_url"]} for item in response.data]  # Collect both name and URL
+    print(images)  
+    return images  # Return a list of dictionaries
+
+# Function to download and return the latest three images as files
+@app.get("/download_images")
+async def download_latest_images():
+    # Step 1: Fetch the latest three image names
+    image_names = await get_latest_three_image_names()
+
+    # Step 2: Initialize a list to hold the file paths
+    files_to_send = []
+
+    bucket_name = "image-bucket"
+    
+    # Step 3: Loop through each image name and download it from the storage
+    for image_name in image_names:
+        image_data = supabase.storage.from_(bucket_name).download(image_name)
+        
+        # Step 4: Save the image to a temporary file
+        file_path = f"/tmp/{image_name}"
+        with open(file_path, "wb") as f:
+            f.write(image_data)
+
+        # Step 5: Add the file path to the list
+        files_to_send.append(file_path)
+    
+    # Step 6: Return the files with the correct media type
+    if len(files_to_send) > 0:
+        file_responses = []
+        for file_path in files_to_send:
+            # Dynamically determine the MIME type based on the file extension
+            mime_type, _ = mimetypes.guess_type(file_path)
+            if mime_type is None:
+                mime_type = "application/octet-stream"  # Fallback for unknown file types
+
+            # Return the file with the correct MIME type
+            file_responses.append(
+                FileResponse(file_path, media_type=mime_type, filename=os.path.basename(file_path))
+            )
+        return file_responses
+    else:
+        return {"error": "No images found"}
