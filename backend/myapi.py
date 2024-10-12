@@ -111,7 +111,7 @@ async def upload_and_detect_image(files: List[UploadFile] = File(...)):
 async def get_latest_three_image_names():
     response = (
         supabase.table("images")
-        .select("image_name, image_url")  # Ensure to select both fields
+        .select("*")
         .order("uploaded_at", desc=True)
         .limit(3)
         .execute()
@@ -121,6 +121,7 @@ async def get_latest_three_image_names():
     images = [{"name": item["image_name"], "url": item["image_url"]} for item in response.data]  # Collect both name and URL
     print(images)  
     return images  # Return a list of dictionaries
+
 
 # Function to download and return the latest three images as files
 @app.get("/download_images")
