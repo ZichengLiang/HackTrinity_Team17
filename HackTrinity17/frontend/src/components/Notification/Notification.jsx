@@ -8,8 +8,12 @@ const Notification = () => {
         <span>
           <MdNotificationsActive className={styles.icon} />
         </span>
-        <h1 className={styles.title}>5 new matches found</h1>
+        <p className={styles.title}>5 new matches found</p>
       </div>
+      <div className={styles.btnContainer}>
+        <button className={styles.btn}>View more</button>
+      </div>
+      
         
     </div>
   )
