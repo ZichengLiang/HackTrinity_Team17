@@ -3,8 +3,8 @@
 .container {
     background-color: var(--color-grid);
      padding: 20px;
-    position: relative;
     border-radius: 20px;
+    margin-bottom: 15px;
 }
 
 .title {

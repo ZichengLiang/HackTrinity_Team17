@@ -1,0 +1,30 @@
+@import "../../../vars.css"; 
+
+.container {
+    display: flex;
+}
+
+.msgBubbleUser {
+    background-color: var(--color-userMsg);
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 40%;
+    margin-left: auto;
+    margin-right: 10px;
+    border-radius: 20px;
+    color: var(--color-txt);
+    box-shadow: 5px, 5px, 5px;
+
+}
+
+
+.msgBubbleAI {
+    background-color: var(--color-aiMsg);
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 40%;
+    margin-right: auto;
+    margin-left: 10px;
+    border-radius: 20px;
+    color: var(--color-txt);
+}

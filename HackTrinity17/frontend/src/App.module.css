@@ -28,16 +28,13 @@
   flex: 6;
   display: grid;
   grid-template-columns: 2fr 3fr; 
-  grid-template-rows: auto auto;
   gap: 0;
 }
-
-
 
 .notif {
   display: grid;
   grid-column: span 2;
-  margin-bottom: 20px;
+  margin: 0;  
 }
 
 .metrics {
@@ -49,4 +46,5 @@
 
 .botContainer {
   grid-column: span 1; 
+  margin-bottom: 0;
 }
