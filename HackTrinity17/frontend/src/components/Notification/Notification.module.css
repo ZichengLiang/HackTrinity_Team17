@@ -6,9 +6,21 @@
     padding: 20px;
     position: relative;
     border-radius: 20px;
-    height: 150px;
+    height: 100px;
+    margin-bottom: 0;
 }
 
 .title {
     color: var(--color-txt);
+}
+
+.notif {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    color: var(--color-orange);
+    height: 50px;
+    width: 50px;
 }

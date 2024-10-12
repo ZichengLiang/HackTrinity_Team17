@@ -26,12 +26,17 @@
 .rightCol {
   flex: 6;
   display: grid;
-  grid-template-columns: 2fr 3fr; /* First column takes 1 fraction, second takes 2 fractions */
+  grid-template-columns: 2fr 3fr; 
+  grid-template-rows: auto auto;
+  gap: 0;
 }
+
+
 
 .notif {
   display: grid;
   grid-column: span 2;
+  max-height: 0px; /* THIS MIGHT BREAK  */
 }
 
 .metrics {

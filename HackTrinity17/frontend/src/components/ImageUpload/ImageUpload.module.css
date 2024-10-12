@@ -57,6 +57,10 @@
     border-radius: 20px;
 }
 
+.customButton:hover {
+    background-color: var(--color-btn-pressed);
+}
+
 .fileName {
     color: var(--color-txt);
 }
