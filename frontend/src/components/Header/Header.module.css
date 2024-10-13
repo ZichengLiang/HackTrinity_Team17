@@ -1,0 +1,24 @@
+@import '../../vars.css';
+
+
+.container {
+    background-color: var(--color-grid);
+    padding: 20px;
+    height: 20%;
+    position: relative;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.title {
+    color: var(--color-txt);
+    text-align: center;
+    flex-grow: 1; /* Allow the title to take the available space and center it */
+    font-size: 40px;
+}
+
+.logo {
+    position: absolute;
+    left: 20px; /* Position the logo in the left corner */
+    height: 45px; /* Adjust the size as needed */
+}

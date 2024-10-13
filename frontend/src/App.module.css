@@ -1,0 +1,50 @@
+/* App.module.css */
+
+@import './vars.css';
+
+.App {
+  background-color: var(--color-bg);
+  height: 100%;
+  width: 100%;
+  padding-top: 15px; 
+  padding-left: 15px;
+  padding-right: 15px; 
+  max-height: 800px;
+}
+/* App.module.css */
+
+.dashboard {
+  display: flex;
+  gap: 15px;
+}
+
+.leftCol {
+  flex: 3;
+  display: grid;
+  grid-template-rows: auto auto;
+}
+
+.rightCol {
+  flex: 6;
+  display: grid;
+  grid-template-columns: 2fr 3fr; 
+  gap: 0;
+}
+
+.notif {
+  display: grid;
+  grid-column: span 2;
+  margin: 0;  
+}
+
+.metrics {
+  display: grid;
+  grid-column: span 1;
+  gap: 15px;
+  margin-right: 15px;
+}
+
+.botContainer {
+  grid-column: span 1; 
+  margin-bottom: 0;
+}

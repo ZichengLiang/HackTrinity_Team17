@@ -1,0 +1,70 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-color: var(--color-grid);
+    padding: 20px;
+    border-radius: 20px;
+    height: 500px;
+    margin-bottom: 15px;
+    width: 500px;
+}
+
+.msgContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-btn1);
+    flex-direction: column-reverse;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    height: 500px;
+    width: 100%;
+    overflow-y: auto;
+    padding: 10px; /* Optional for spacing */
+}
+
+.inputContainer {
+    position: sticky;
+    bottom: 0;
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.chatInputField {
+    display: flex;
+    height: 35px;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+    padding-left: 10px;
+    width: 95%;
+    margin-bottom: 10px;
+    background-color: var(--color-dark);
+    border: 0;
+    color: var(--color-txt);
+    font-size: 15px;
+}
+
+.title {
+    color: var(--color-txt);
+    margin-bottom: 15px;
+}
+
+.msgContainer::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+    margin-right: 5px;
+}
+
+.msgContainer::-webkit-scrollbar-track {
+    background: var(--color-btn1); /* Track color */
+    border-radius: 5px;
+}
+
+.msgContainer::-webkit-scrollbar-thumb {
+    background: var(--color-dark); /* Scrollbar thumb color */
+    border-radius: 10px;
+    margin-right: 5px;
+}

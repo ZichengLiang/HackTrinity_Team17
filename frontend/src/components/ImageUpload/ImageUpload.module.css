@@ -1,0 +1,67 @@
+@import "../../vars.css"; 
+
+.container {
+    background-color: var(--color-grid);
+    padding: 20px;
+    position: relative;
+    border-radius: 20px;
+    height: 110px;
+}
+
+.title {
+    color: var(--color-txt);
+    margin-bottom: 10px;
+}
+
+.uploadContainer {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.rightCol {
+    align-items: center;
+    gap: 20px;
+}
+
+.uploadButton {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.submitBtn {
+    background-color: var(--color-btn1);
+    padding: 8px;
+    border-radius: 50%;
+    border: 0;
+    transition: 0.3s;
+}
+
+.submitBtn:hover {
+    background-color: var(--color-btn-pressed);
+}
+
+.icon {
+    color: var(--color-txt);
+    height: 50px;
+    width: 50px;
+}
+.fileInput {
+    margin-top: 10px;
+}
+
+.customButton {
+    background-color: var(--color-btn1);
+    color: var(--color-txt);
+    padding: 5px;
+    border-radius: 20px;
+}
+
+.customButton:hover {
+    background-color: var(--color-btn-pressed);
+}
+
+.fileName {
+    color: var(--color-txt);
+}

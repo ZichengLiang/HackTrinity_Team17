@@ -2,7 +2,11 @@
     --color-txt: #D2D2D2;
     --color-bg: #0E0A2A;
     --color-btn1: #535272; 
+    --color-btn-pressed: #6F6F98;
     --color-grid: #2B2B48; 
     --color-orange: #C45508;
     --color-red: #ff2c2c;
+    --color-dark: #222133;
+    --color-userMsg: #44436a;
+    --color-aiMsg: #36355E;
 }

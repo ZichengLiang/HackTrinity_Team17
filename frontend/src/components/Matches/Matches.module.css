@@ -1,0 +1,56 @@
+/* Grid1.module.css */
+@import '../../vars.css'; 
+
+.container {
+    background-color: var(--color-grid);
+    padding: 20px;
+    position: relative;
+    border-radius: 20px;
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.title {
+    color: var(--color-txt);
+}
+
+.allLinks {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.links {
+    height: 90%;
+}
+
+.linkList {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.subhead {
+    color: var(--color-txt);
+}
+
+.linkName {
+    color: var(--color-txt);
+    max-width: 100%;  /* Ensures it uses the full width of the link container */
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;   /* This is essential to hide overflowing text */
+    text-overflow: ellipsis; /* Adds ellipsis to overflowing text */
+}
+
+.link {
+    background-color: var(--color-btn1);
+    width: 100%; /* Ensures the link container takes the full width */
+    margin-bottom: 10px;
+    color: var(--color-txt);
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 10px;  /* Add some padding for better readability */
+    box-sizing: border-box; /* Ensure padding is included in the width calculation */
+    overflow: hidden;  /* Make sure the container hides overflow */
+}

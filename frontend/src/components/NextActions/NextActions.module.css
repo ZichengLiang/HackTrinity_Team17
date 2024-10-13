@@ -1,0 +1,30 @@
+@import "../../vars.css"; 
+
+.container {
+    background-color: var(--color-grid);
+     padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+}
+
+.title {
+    color: var(--color-txt);
+}
+
+.btnContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn {
+    padding: 8px;
+    border-radius: 20px;
+    background-color: var(--color-btn1);
+    color: var(--color-txt);
+    border: 0;
+    font-size: 15px;
+}
+
+.btn:hover{
+    background-color: var(--color-btn-pressed);
+}
