@@ -9,7 +9,7 @@ const Chatbot = () => {
   const [loading, setLoading] = useState(false);
 
   const addMessage = (newMessage) => {
-    setMessages((m) => [...m, newMessage]);
+    setMessages((m) => [newMessage, ...m]);
   };
 
   const sendMessage = async () => {
@@ -28,13 +28,13 @@ const Chatbot = () => {
       addMessage({ sender: 'ai', contents: aiResponse });
 
       setLoading(false);
-    }, 1000); // Simulate a 1 second delay for AI response
+    }, 1000); // Simulate a 1-second delay for AI response
   };
 
-  // NEED TO SET UP API ENDPOINT
-
   useEffect(() => {
-    chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (chatBottomRef.current) {
+      chatBottomRef.current.scrollTop = chatBottomRef.current.scrollHeight;
+    }
   }, [messages]);
 
   // Handle message submission on pressing Enter
@@ -48,26 +48,21 @@ const Chatbot = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Legal Chatbot</h1>
-      <div className={styles.msgContainer}>
+      <div className={styles.msgContainer} ref={chatBottomRef}>
         {messages.map((msg, index) => (
           <ChatMessage sender={msg.sender} contents={msg.contents} key={index} />
         ))}
-        <div ref={chatBottomRef} className={loading ? styles.bottomContainerLoading : ''} />
-
-        <div className={styles.inputContainer}>
-          <textarea
-            name="chatInput"
-            rows="1"
-            placeholder="Ask a question"
-            className={styles.chatInputField}
-            onKeyDown={handleInputSubmit}
-            ref={userInputRef}
-          >
-          </textarea>
-        </div>
       </div>
-
-    
+      <div className={styles.inputContainer}>
+        <textarea
+          name="chatInput"
+          rows="1"
+          placeholder="Ask a question"
+          className={styles.chatInputField}
+          onKeyDown={handleInputSubmit}
+          ref={userInputRef}
+        />
+      </div>
     </div>
   );
 };

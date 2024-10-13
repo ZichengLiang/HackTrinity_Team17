@@ -1,4 +1,3 @@
-@import "../../vars.css"; 
 
 .container {
     display: flex;
@@ -14,16 +13,23 @@
 .msgContainer {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    background-color: var(--color-orange);
+    background-color: var(--color-btn1);
+    flex-direction: column-reverse;
+    border-radius: 20px;
     margin-bottom: 15px;
+    height: 500px;
+    width: 600px;
+    overflow-y: auto;
+    padding: 10px; /* Optional for spacing */
 }
+
 .inputContainer {
-    position: relative;
+    position: sticky;
+    bottom: 0;
     line-height: 1;
     display: flex;
     justify-content: center;
-    margin-bottom: 0;
+    margin-top: 10px;
 }
 
 .chatInputField {
@@ -47,9 +53,18 @@
     margin-bottom: 15px;
 }
 
-.msgContainer {
-    background-color: var(--color-btn1);
-    width: 100%;
-    height: 90%;
-    border-radius: 20px;
+.msgContainer::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+    margin-right: 5px;
+}
+
+.msgContainer::-webkit-scrollbar-track {
+    background: var(--color-btn1); /* Track color */
+    border-radius: 5px;
+}
+
+.msgContainer::-webkit-scrollbar-thumb {
+    background: var(--color-dark); /* Scrollbar thumb color */
+    border-radius: 10px;
+    margin-right: 5px;
 }
