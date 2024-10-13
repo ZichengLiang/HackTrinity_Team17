@@ -5,7 +5,7 @@ from google.oauth2 import service_account
 from dotenv import load_dotenv
 from supabase import create_client, Client
 from supabase.client import ClientOptions
-from typing import List
+from typing import List, Dict
 from io import BytesIO
 import os
 import magic
@@ -174,6 +174,63 @@ async def download_latest_images():
 class UserQuery(BaseModel):
     query: str
 
+def get_top_5_websites() -> List[Dict[str, int]]:
+    """
+    Fetch the top 5 websites that have used your images from the stolen_images table.
+    Returns a list of dictionaries with domain and count.
+    """
+    # Query Supabase using the query builder
+    try:
+        # Using the query builder to select stolen_url data and aggregate
+        response = supabase.table('stolen_images') \
+            .select('stolen_url') \
+            .execute()
+
+        if response.status_code == 200:
+            # Process the results to extract domain and count
+            urls = [entry['stolen_url'] for entry in response.data]
+            
+            # Flatten and count occurrences of each domain
+            domain_count = {}
+            for url_list in urls:
+                for url in url_list:
+                    domain = extract_domain(url)  # Use helper function to extract domain
+                    domain_count[domain] = domain_count.get(domain, 0) + 1
+
+            # Sort by count and return the top 5 domains
+            sorted_domains = sorted(domain_count.items(), key=lambda x: x[1], reverse=True)[:5]
+            return [{"domain": domain, "count": count} for domain, count in sorted_domains]
+        else:
+            return []
+
+    except Exception as e:
+        logger.error(f"Error occurred: {str(e)}")
+        return []
+
+def extract_domain(url: str) -> str:
+    """
+    Helper function to extract the domain from a given URL.
+    """
+    import re
+    pattern = r'(https?://[^/]+)'
+    match = re.match(pattern, url)
+    return match.group(1) if match else url
+
+@app.get("/top-websites")
+async def fetch_top_websites():
+    """
+    Endpoint to get the top 5 websites that have used the images based on the stolen_images table.
+    """
+    try:
+        top_websites = get_top_5_websites()
+        return JSONResponse(content={"top_websites": top_websites})
+    except Exception as e:
+        logger.error(f"Error occurred: {str(e)}")
+        return HTTPException(status_code=500, detail = str(e))
+    
+
+
+#posting chatbot querying2
 @app.post("/process_query")
 async def handle_query(user_query: UserQuery):
     query_text = user_query.query.strip()
