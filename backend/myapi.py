@@ -171,8 +171,6 @@ async def download_latest_images():
 
 
 
-class UserQuery(BaseModel):
-    query: str
 
 def get_top_5_websites() -> List[Dict[str, int]]:
     """
@@ -182,29 +180,23 @@ def get_top_5_websites() -> List[Dict[str, int]]:
     # Query Supabase using the query builder
     try:
         # Using the query builder to select stolen_url data and aggregate
-        response = supabase.table('stolen_images') \
-            .select('stolen_url') \
-            .execute()
+        response = supabase.table('stolen_images').select('stolen_url').execute()
+        # Process the results to extract domain and count
+        urls = [entry['stolen_url'] for entry in response.data]
+        
+        # Flatten and count occurrences of each domain
+        domain_count = {}
+        for url_list in urls:
+            for url in url_list:
+                domain = extract_domain(url)  # Use helper function to extract domain
+                domain_count[domain] = domain_count.get(domain, 0) + 1
 
-        if response.status_code == 200:
-            # Process the results to extract domain and count
-            urls = [entry['stolen_url'] for entry in response.data]
-            
-            # Flatten and count occurrences of each domain
-            domain_count = {}
-            for url_list in urls:
-                for url in url_list:
-                    domain = extract_domain(url)  # Use helper function to extract domain
-                    domain_count[domain] = domain_count.get(domain, 0) + 1
+        # Sort by count and return the top 5 domains
+        sorted_domains = sorted(domain_count.items(), key=lambda x: x[1], reverse=True)[:5]
+        return [{"domain": domain, "count": count} for domain, count in sorted_domains]
 
-            # Sort by count and return the top 5 domains
-            sorted_domains = sorted(domain_count.items(), key=lambda x: x[1], reverse=True)[:5]
-            return [{"domain": domain, "count": count} for domain, count in sorted_domains]
-        else:
-            return []
 
     except Exception as e:
-        logger.error(f"Error occurred: {str(e)}")
         return []
 
 def extract_domain(url: str) -> str:
@@ -223,12 +215,15 @@ async def fetch_top_websites():
     """
     try:
         top_websites = get_top_5_websites()
+        print(top_websites)
         return JSONResponse(content={"top_websites": top_websites})
     except Exception as e:
-        logger.error(f"Error occurred: {str(e)}")
         return HTTPException(status_code=500, detail = str(e))
     
 
+
+class UserQuery(BaseModel):
+    query: str
 
 #posting chatbot querying2
 @app.post("/process_query")

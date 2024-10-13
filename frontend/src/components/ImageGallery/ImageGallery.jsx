@@ -20,8 +20,8 @@ const ImageGallery = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Image Gallery</h1>
       <div className={styles.btnContainer}>
+        <h1 className={styles.title}>Image Gallery</h1>
         <button className={styles.btn} onClick={fetchLatestImages}>
           Most Recent
         </button>
