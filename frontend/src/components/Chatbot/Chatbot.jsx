@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import removeMarkdown from "remove-markdown"; // Import remove-markdown
 import styles from "./Chatbot.module.css";
 import ChatMessage from "./ChatMessage/ChatMessage";
 
@@ -34,9 +35,28 @@ const Chatbot = () => {
         const data = await response.json();
         if (!response.ok)
           throw new Error("Failed to get a response from the server");
+        
+        
+        const stripMarkdown = (text) => {
+          return text
+            .replace(/(\*\*|__)(.*?)\1/g, '$2') // Bold
+            .replace(/(\*|_)(.*?)\1/g, '$2')    // Italics
+            .replace(/~~(.*?)~~/g, '$1')        // Strikethrough
+            .replace(/`(.*?)`/g, '$1')          // Inline code
+            .replace(/#+\s+(.*?)(\n|$)/g, '$1') // Headers
+            .replace(/\[.*?\]\((.*?)\)/g, '$1') // Links
+            .replace(/!\[.*?\]\((.*?)\)/g, '')  // Images
+            .replace(/(?:\r\n|\r|\n)/g, ' ');   // Line breaks
+        };
+        
+        // Process AI response, remove markdown from the response before adding it
+        const cleanResponse = stripMarkdown(data.perplexity_response);
+        console.log("Original Response:", data.perplexity_response);
+        console.log("Cleaned Response:", cleanResponse);
+
 
         // Add AI response to the conversation
-        addMessage({ sender: "ai", contents: data.perplexity_response });
+        addMessage({ sender: "ai", contents: cleanResponse });
       }, 1000); // Simulate a 1-second delay for AI response
     } catch (error) {
       console.error("Error:", error);
