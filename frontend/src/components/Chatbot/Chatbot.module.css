@@ -5,8 +5,9 @@
     background-color: var(--color-grid);
     padding: 20px;
     border-radius: 20px;
-    height: 600px;
+    height: 500px;
     margin-bottom: 15px;
+    width: 500px;
 }
 
 .msgContainer {
@@ -17,7 +18,7 @@
     border-radius: 20px;
     margin-bottom: 15px;
     height: 500px;
-    width: 600px;
+    width: 100%;
     overflow-y: auto;
     padding: 10px; /* Optional for spacing */
 }

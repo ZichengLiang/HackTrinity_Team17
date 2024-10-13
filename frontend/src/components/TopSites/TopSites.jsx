@@ -32,6 +32,7 @@ const TopSites = () => {
     datasets: [
       {
         label: 'Top Websites Using Images',
+        labelColor: '#D2d2d2',
         data: topSites.map(site => site.count),
         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
         hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
@@ -41,17 +42,19 @@ const TopSites = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Top Sites</h1>
-      
-      <button onClick={fetchTopSites} className={styles.fetchButton}>
-        Fetch Top Sites
-      </button>
+      <div className={styles.heading}>
+        <h1 className={styles.title}>Top Sites</h1>
+        
+        <button onClick={fetchTopSites} className={styles.fetchButton}>
+          Fetch Top Sites
+        </button>
+      </div>
 
       {loading ? (
         <p>Loading...</p>
       ) : topSites.length > 0 ? (
         <div className={styles.chartContainer}>
-          <Pie data={chartData} />
+          <Pie data={chartData} className={styles.chartData}/>
         </div>
       ) : (
         <p>No sites found</p>

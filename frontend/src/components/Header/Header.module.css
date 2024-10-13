@@ -12,4 +12,13 @@
 
 .title {
     color: var(--color-txt);
+    text-align: center;
+    flex-grow: 1; /* Allow the title to take the available space and center it */
+    font-size: 40px;
+}
+
+.logo {
+    position: absolute;
+    left: 20px; /* Position the logo in the left corner */
+    height: 45px; /* Adjust the size as needed */
 }

@@ -5,12 +5,12 @@ const Matches = ({ urls }) => {
     <div className={styles.container}>
       <h1 className={styles.title}>Matches</h1>
       {urls.length > 0 ? (
-        <div>
-          <p>{urls.length} link(s) found:</p> {/*Displays the count of URLs */}
-          <ul>
+        <div className={styles.links}>
+          <p className={styles.subhead}>{urls.length} link(s) found:</p>
+          <ul className={styles.linkList}>
             {urls.map((url, index) => (
-              <li key={index}>
-                <a href={url} target="_blank" rel="noopener noreferrer">
+              <li key={index} className={styles.link}>
+                <a className={styles.linkName} href={url} target="_blank" rel="noopener noreferrer">
                   {url}
                 </a>
               </li>
