@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import JSONResponse, FileResponse
 from google.cloud import vision
 from google.oauth2 import service_account
@@ -10,6 +10,10 @@ from io import BytesIO
 import os
 import magic
 import hashlib
+from chatbot import process_query
+from pydantic import BaseModel
+
+
 
 # Load environment variables
 load_dotenv()
@@ -162,3 +166,21 @@ async def download_latest_images():
         return file_responses
     else:
         return {"error": "No images found"}
+    
+
+
+
+
+class UserQuery(BaseModel):
+    query: str
+
+@app.post("/process_query")
+async def handle_query(user_query: UserQuery):
+    query_text = user_query.query.strip()
+    try:
+        result = process_query(query_text)
+        return result
+    except ValueError as ve:
+        raise HTTPException(status_code=400, detail=str(ve))
+    except RuntimeError as re:
+        raise HTTPException(status_code=500, detail=str(re))

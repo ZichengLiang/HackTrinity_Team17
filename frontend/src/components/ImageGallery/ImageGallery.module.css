@@ -19,3 +19,22 @@
     object-fit: cover; 
     margin: 10px; 
 }
+
+
+.btnContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn {
+    padding: 8px;
+    border-radius: 20px;
+    background-color: var(--color-btn1);
+    color: var(--color-txt);
+    border: 0;
+    font-size: 15px;
+}
+
+.btn:hover{
+    background-color: var(--color-btn-pressed);
+}

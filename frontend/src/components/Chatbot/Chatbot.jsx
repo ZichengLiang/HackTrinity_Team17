@@ -21,17 +21,31 @@ const Chatbot = () => {
     userInputRef.current.value = ''; // Clear the input field
     setLoading(true);
 
-    // Simulate a delayed AI response using setTimeout
-    setTimeout(() => {
-      // Dummy AI response
-      const aiResponse = "This is a dummy AI response.";
-      addMessage({ sender: 'ai', contents: aiResponse });
+    try {
+      // Call the backend API endpoint to get the AI response
+      const response = await fetch('http://127.0.0.1:8000/process_query', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query: messageContents }),
+      });
 
+      if (!response.ok) {
+        throw new Error('Failed to get a response from the server');
+      }
+
+      const data = await response.json();
+
+      // Add AI response to the conversation
+      addMessage({ sender: 'ai', contents: data.perplexity_response });
+    } catch (error) {
+      console.error('Error:', error);
+      addMessage({ sender: 'system', contents: 'Something went wrong. Please try again later.' });
+    } finally {
       setLoading(false);
-    }, 1000); // Simulate a 1 second delay for AI response
+    }
   };
-
-  // NEED TO SET UP API ENDPOINT
 
   useEffect(() => {
     chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -62,12 +76,9 @@ const Chatbot = () => {
             className={styles.chatInputField}
             onKeyDown={handleInputSubmit}
             ref={userInputRef}
-          >
-          </textarea>
+          ></textarea>
         </div>
       </div>
-
-    
     </div>
   );
 };

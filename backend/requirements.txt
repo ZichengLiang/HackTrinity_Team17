@@ -49,6 +49,8 @@ storage3==0.8.1
 StrEnum==0.4.15
 supabase==2.9.0
 supafunc==0.6.1
+transformers==4.34.0
+torch==2.0.1
 typing_extensions==4.12.2
 urllib3==2.2.3
 uvicorn==0.31.1
